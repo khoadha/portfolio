@@ -1,0 +1,11 @@
+.layout {
+    display: flex;
+    max-height: 100vh;
+    overflow: hidden;
+}
+
+.content {
+    flex: 1;
+    padding-left: 2%;
+    overflow-y: auto;
+}

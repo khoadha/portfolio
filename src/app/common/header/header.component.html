@@ -1,0 +1,20 @@
+<div class="m-5">
+    <p-menubar [model]="items">
+        <ng-template #end>
+            <div class="flex align-items-center gap-2">
+                <p-toggleswitch [(ngModel)]="darkMode">
+                    <ng-template #handle let-dark="dark">
+                        <i *ngIf="isDark" class="pi pi-moon"></i>
+                        <i *ngIf="!isDark" class="pi pi-sun"></i>
+                    </ng-template>
+                </p-toggleswitch>
+                <p-button *ngIf="!isLogged" routerLink="/enter-key" icon="pi pi-sign-in" aria-label="Login" />
+                <p-button *ngIf="isLogged" routerLink="/dashboard/profile" icon="pi pi-chart-bar"
+                    aria-label="Dashboard" />
+                <p-button *ngIf="isLogged" (onClick)="onSignOut()" icon="pi pi-sign-out" severity="danger"
+                    aria-label="Signout" />
+            </div>
+        </ng-template>
+    </p-menubar>
+
+</div>

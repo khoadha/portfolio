@@ -1,0 +1,78 @@
+<ng-container *ngIf="records">
+    <app-upload-file></app-upload-file>
+    <p-toolbar styleClass="my-4">
+        <ng-template #start>
+            <p-button severity="danger" label="Delete" [badge]="selectedRecords.length" icon="pi pi-trash"
+                (onClick)="deleteSelectedRecords()" [disabled]="!selectedRecords || !selectedRecords.length" />
+        </ng-template>
+        <ng-template #end>
+            <p-button icon="pi pi-plus" label="Create new" class="ml-2" (onClick)="showDialog(undefined)" />
+        </ng-template>
+    </p-toolbar>
+    <p-card>
+        <p-table [value]="records" [paginator]="true" [rows]="5" [(selection)]="selectedRecords" [rowHover]="true"
+            dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [showCurrentPageReport]="true">
+            <ng-template #header>
+                <tr>
+                    <th></th>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Thumbnail Image</th>
+                    <th>Created At</th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template #body let-record>
+                <tr>
+                    <td style="width: 3rem">
+                        <p-tableCheckbox [value]="record" />
+                    </td>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.title }}</td>
+                    <td><img [src]="record.thumbnailImageUrl" [alt]="record.title" width="50" class="shadow-lg" /></td>
+                    <td>{{ record.createdDate | date: 'short' }}</td>
+                    <td>
+                        <p-button icon="pi pi-spin pi-cog" (onClick)="showDialog(record)" aria-label="detail" />
+                    </td>
+                </tr>
+            </ng-template>
+            <p-confirmDialog />
+        </p-table>
+    </p-card>
+    <p-toast></p-toast>
+
+    <p-dialog [header]="isEditMode ? 'Edit blog' : 'Create new blog'" [modal]="true" [(visible)]="visible"
+        [style]="{ width: '50rem', height: '100vh' }">
+        <app-upload-file></app-upload-file>
+        <span class="text-secondary block my-4">
+            <div class="flex justify-content-center text-xl text-primary">
+                Blog information
+            </div>
+        </span>
+        <div class="flex flex-column align-items-center gap-3 mb-3 w-full">
+            <p-floatlabel variant="on" class="w-full">
+                <label for="on_label">Title</label>
+                <input class="w-full" pInputText id="on_label" [(ngModel)]="currentRecord.title" autocomplete="off" />
+            </p-floatlabel>
+            <p-floatlabel variant="on" class="w-full">
+                <label for="on_label">Thumbnail Image</label>
+                <input class="w-full" pInputText id="on_label" [(ngModel)]="currentRecord.thumbnailImageUrl"
+                    autocomplete="off" />
+            </p-floatlabel>
+            <p-multiSelect class="w-full" [options]="categories" [(ngModel)]="selectedCategoryIds" optionLabel="name"
+                optionValue="id" placeholder="Select categories">
+            </p-multiSelect>
+            <p-editor [style]="{ height: 'auto', width: 'inherit' }" [modules]="modules"
+                placeholder="Enter blog content here!" [(ngModel)]="currentRecord.content"
+                (onInit)="onEditorInit($event)">
+            </p-editor>
+            <input type="file" accept="image/*" #imageUpload (change)="onImageUpload($event)" style="display: none;" />
+        </div>
+        <div class="flex justify-content-end gap-2">
+            <p-button label="Cancel" severity="secondary" (click)="visible = false" />
+            <p-button label="Save" (click)="save()" />
+        </div>
+    </p-dialog>
+</ng-container>
+<p-toast></p-toast>

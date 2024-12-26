@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { PrimeNG } from 'primeng/config';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,12 @@ import { Component } from '@angular/core';
   standalone: false,
   styleUrl: './app.component.scss'
 })
-export class AppComponent {
-  title = 'portfolio-v2';
+export class AppComponent implements OnInit {
+
+  constructor(private primeng: PrimeNG) {}
+
+  ngOnInit() {
+      this.primeng.ripple.set(true);
+  }
 }
+

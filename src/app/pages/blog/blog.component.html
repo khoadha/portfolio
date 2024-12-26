@@ -1,0 +1,96 @@
+<p-toolbar styleClass="w-full justify-content-center hidden md:flex lg:flex xl:flex">
+    <div class="flex gap-3 w-full p-2">
+        <div class="flex justify-content-end">
+            <p-selectbutton [(ngModel)]="layout" [options]="options" [allowEmpty]="false">
+                <ng-template #item let-item>
+                    <i class="pi" [ngClass]="{ 'pi-bars': item === 'list', 'pi-table': item === 'grid' }"></i>
+                </ng-template>
+            </p-selectbutton>
+        </div>
+        <p-floatlabel variant="on" style="width: inherit;">
+            <input pInputText id="on_label" [(ngModel)]="query" autocomplete="off" class="w-full" />
+            <label for="on_label">Blog title </label>
+        </p-floatlabel>
+        <p-multiSelect [(ngModel)]="selectedCategoryIds" [options]="categories" optionLabel="name" optionValue="id"
+            placeholder="Filter by categories" />
+        <p-dropdown [(ngModel)]="selectedSortOption" [options]="sortOptions" optionLabel="name" optionValue="code"
+            placeholder="Select filter" />
+        <p-button label="Search" icon="pi pi-search" [loading]="loading" (onClick)="handleOnSearch()" />
+    </div>
+</p-toolbar>
+
+<ng-container *ngIf="!loading; else load">
+    <p-card styleClass="m-5 md:mt-5 md:m-0" *ngIf="data">
+        <p-dataview #dv [value]="data" [layout]="layout">
+            <ng-template #list let-items>
+                Lười nên chưa làm xem danh sách, xem dạng lưới đỡ nha
+            </ng-template>
+    
+            <ng-template #grid let-items>
+                <div class="grid grid-nogutter">
+                    <div *ngFor="let item of items" class="col-12 md:col-6 lg:col-4 xl:col-3 p-2">
+                        <p-card styleClass="cursor-pointer blog-hover" (click)="openBlog(item.id)">
+                            <div class="border-round-lg">
+                                <div class="flex justify-content-center mb-3">
+                                    <img [src]="item.thumbnailImageUrl"
+                                        class="rounded-0 w-full border-round-lg border-noround-bottom" alt="blog"
+                                        style="height:16rem;">
+                                </div>
+                                <div class="p-3 pt-0">
+                                    <div>
+                                        <div class="font-bold text-sm mt-2 truncate-title">{{ item.title }}</div>
+                                    </div>
+                                    <div class="flex justify-content-between align-items-center mt-4">
+                                        <span class="text-sm font-semibold">{{ item.createdDate | date: 'short' }}</span>
+                                        <div class="flex gap-1">
+                                            <div>
+                                                <i class="pi pi-eye"></i>
+                                            </div>
+                                            <div>
+                                                {{item.viewCount}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-card>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataview>
+    </p-card>
+</ng-container>
+
+<ng-template #load>
+    <div class="grid cols-12 p-5">
+        <div
+            *ngFor="let i of counterArray(size); let first = first"
+            class="col-12 md:col-6 lg:col-4 xl:col-3 p-2"
+        >
+            <div
+                class="p-3 border-1 border-round surface-border surface-card dark:surface-dark"
+            >
+                <div class="flex align-items-center justify-content-between gap-2">
+                    <p-skeleton class="w-6rem h-2rem"></p-skeleton>
+                    <p-skeleton class="w-3rem h-1rem"></p-skeleton>
+                </div>
+                <div class="flex flex-column align-items-center gap-4 py-5">
+                    <p-skeleton class="h-10rem w-75"></p-skeleton>
+                    <p-skeleton class="w-8rem h-2rem"></p-skeleton>
+                    <p-skeleton class="w-6rem h-1rem"></p-skeleton>
+                </div>
+                <div class="flex align-items-center justify-content-between">
+                    <p-skeleton class="w-4rem h-2rem"></p-skeleton>
+                    <p-skeleton class="w-3rem h-3rem border-circle"></p-skeleton>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+<div class="flex justify-content-center w-100 align-items-center my-5">
+    <p-paginator [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} blogs" #paginator [first]="0" [rows]="8"
+        [totalRecords]="total" (onPageChange)="onPageChange($event)">
+    </p-paginator>
+</div>

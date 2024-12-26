@@ -1,0 +1,17 @@
+<div class="flex justify-content-center">
+    <p-card styleClass="p-5">
+        <form (ngSubmit)="onSubmit()" #keyForm="ngForm">
+            <div class="text-center text-primary text-2xl mb-4">
+                Access to the very secret place
+            </div>
+            <div class="form-group">
+                <p-floatlabel variant="on">
+                    <input class="w-full" type="password" pInputText id="on_label" [(ngModel)]="key" autocomplete="off" />
+                    <label for="on_label">Enter passkey to continue</label>
+                </p-floatlabel>
+            </div>
+            <p-button styleClass="w-full mt-2" iconPos="right" label="Verify" icon="pi pi-check-circle" [loading]="loading" (onClick)="onSubmit()" />
+        </form>
+    </p-card>
+</div>
+<p-toast></p-toast>

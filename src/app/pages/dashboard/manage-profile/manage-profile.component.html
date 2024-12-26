@@ -1,0 +1,71 @@
+<ng-container *ngIf="profile">
+    <app-upload-file></app-upload-file>
+    <div class="flex flex-column align-items-center gap-3 my-4 w-full">
+        <span class="text-secondary block mb-4">
+            <div class="flex justify-content-center text-xl text-primary">
+                Edit Profile
+            </div>
+        </span>
+        
+        <div class="flex flex-column align-items-center gap-4 mb-3 w-full">
+            <!-- Name and Role in 1 row -->
+            <div class="flex w-full gap-3">
+                <p-floatlabel variant="on" class="w-full">
+                    <label for="name">Name</label>
+                    <input class="w-full" pInputText id="name" [(ngModel)]="profile.name" autocomplete="off" />
+                </p-floatlabel>
+        
+                <p-floatlabel variant="on" class="w-full">
+                    <label for="role">Role</label>
+                    <input class="w-full" pInputText id="role" [(ngModel)]="profile.role" autocomplete="off" />
+                </p-floatlabel>
+    
+                <p-floatlabel variant="on" class="w-full">
+                    <label for="profileImage">Profile Image</label>
+                    <input class="w-full" pInputText id="profileImage" [(ngModel)]="profile.profileImage" autocomplete="off" />
+                </p-floatlabel>
+            </div>
+        
+            <!-- Skills -->
+            <p-floatlabel variant="on" class="w-full">
+                <label for="skills">Skills (separate between skills by comma)</label>
+                <input class="w-full" pInputText id="skills" [(ngModel)]="profile.skills" autocomplete="off" />
+            </p-floatlabel>
+        
+            <!-- Summary -->
+            <p-floatlabel variant="on" class="w-full">
+                <label for="summary">Summary</label>
+                <input class="w-full" pInputText id="summary" [(ngModel)]="profile.summary" autocomplete="off" />
+            </p-floatlabel>
+        
+            <!-- GitHub, LinkedIn, and Facebook in 1 row -->
+            <div class="flex w-full gap-3">
+                <p-floatlabel variant="on" class="w-full">
+                    <label for="githubUrl">GitHub</label>
+                    <input class="w-full" pInputText id="githubUrl" [(ngModel)]="profile.githubUrl" autocomplete="off" />
+                </p-floatlabel>
+        
+                <p-floatlabel variant="on" class="w-full">
+                    <label for="linkedinUrl">LinkedIn</label>
+                    <input class="w-full" pInputText id="linkedinUrl" [(ngModel)]="profile.linkedinUrl" autocomplete="off" />
+                </p-floatlabel>
+        
+                <p-floatlabel variant="on" class="w-full">
+                    <label for="facebookUrl">Facebook</label>
+                    <input class="w-full" pInputText id="facebookUrl" [(ngModel)]="profile.facebookUrl" autocomplete="off" />
+                </p-floatlabel>
+            </div>
+        </div>
+        
+            <!-- Availability -->
+            <div class="w-full flex gap-2 justify-content-center">
+                <p-toggleswitch [(ngModel)]="profile.isAvailable" />
+                <p-tag *ngIf="profile.isAvailable" severity="success" value="Available" />
+                <p-tag *ngIf="!profile.isAvailable" severity="danger" value="Unavailable" />
+            </div>
+    </div>
+    
+    <p-button styleClass="w-full mt-2" label="Update" (click)="save()"></p-button>
+    
+    <p-toast></p-toast>
+</ng-container>

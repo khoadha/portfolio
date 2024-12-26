@@ -1,0 +1,19 @@
+// In your component's SCSS file
+:host {
+    display: block;
+    height: 100%;
+  }
+  
+  .dock-window {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  
+  // To prevent dock from overlapping with content, add padding to main content
+  :host ::ng-deep .p-dock {
+    padding: 0.5rem;
+    // backdrop-filter: blur(10px); // Optional: adds frosted glass effect
+  }

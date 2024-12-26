@@ -1,0 +1,6 @@
+<p-toolbar>
+    <p-fileupload #fu mode="basic" name="File" chooseLabel="Choose file to upload" [url]="uploadUrl"
+        accept="image/*" (onUpload)="onUpload($event)" />
+    <p-button icon="pi pi-upload" label="Upload and copy link to clipboard" (onClick)="fu.upload()" severity="secondary" />
+</p-toolbar>
+<p-toast></p-toast>

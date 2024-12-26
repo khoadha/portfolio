@@ -1,0 +1,29 @@
+:host ::ng-deep {
+    .p-dropdown {
+        width: 30% !important;
+    }
+
+    .p-multiSelect {
+        width: 30% !important;
+    }
+
+    .blog-hover {
+        transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    
+    .blog-hover:hover {
+        transform: translateY(-10px);
+        /* Moves the item 10px upwards */
+    }
+}
+
+
+
+.truncate-title{
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    /* Limits to 1 line */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
