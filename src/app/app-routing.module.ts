@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, ExtraOptions } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { BlogComponent } from './pages/blog/blog.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ManageBlogComponent } from './pages/dashboard/manage-blog/manage-blog.component';
@@ -13,8 +13,6 @@ import { ProjectComponent } from './pages/project/project.component';
 import { EnterKeyComponent } from './pages/enter-key/enter-key.component';
 import { authGuard, signedInGuard } from './core/guards/auth.guard';
 import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
-
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -48,7 +46,6 @@ const routes: Routes = [
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule],
-    providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }]
+    exports: [RouterModule]
 })
 export class AppRoutingModule { }
