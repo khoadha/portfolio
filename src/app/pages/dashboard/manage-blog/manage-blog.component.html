@@ -10,9 +10,11 @@
         </ng-template>
     </p-toolbar>
     <p-card>
-        <p-table [value]="records" [paginator]="true" [rows]="5" [(selection)]="selectedRecords" [rowHover]="true"
-            dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [showCurrentPageReport]="true">
+        <p-table 
+        [value]="records"
+        [(selection)]="selectedRecords" 
+        [rowHover]="true"
+        dataKey="id">
             <ng-template #header>
                 <tr>
                     <th></th>
@@ -40,7 +42,12 @@
             <p-confirmDialog />
         </p-table>
     </p-card>
-    <p-toast></p-toast>
+    <div class="flex justify-content-center w-100 align-items-center mt-5">
+        <p-paginator [showCurrentPageReport]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #paginator [first]="0"
+            [rows]="5" [totalRecords]="total" (onPageChange)="onPageChange($event)">
+        </p-paginator>
+    </div>
 
     <p-dialog [header]="isEditMode ? 'Edit blog' : 'Create new blog'" [modal]="true" [(visible)]="visible"
         [style]="{ width: '50rem', height: '100vh' }">
@@ -63,10 +70,13 @@
             <p-multiSelect class="w-full" [options]="categories" [(ngModel)]="selectedCategoryIds" optionLabel="name"
                 optionValue="id" placeholder="Select categories">
             </p-multiSelect>
-            <p-editor [style]="{ height: 'auto', width: 'inherit' }" [modules]="modules"
-                placeholder="Enter blog content here!" [(ngModel)]="currentRecord.content"
-                (onInit)="onEditorInit($event)">
-            </p-editor>
+            <div class="editor-container">
+                <p-editor [style]="{ height: 'auto', width: 'inherit', minHeight: '300px' }" 
+                          [modules]="modules" 
+                          [(ngModel)]="currentRecord.content" 
+                          (onInit)="onEditorInit($event)">
+                </p-editor>
+            </div>
             <input type="file" accept="image/*" #imageUpload (change)="onImageUpload($event)" style="display: none;" />
         </div>
         <div class="flex justify-content-end gap-2">

@@ -10,8 +10,32 @@
     opacity: 0.8;
 }
 
+.ql-toolbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    background: white !important;
+}
+
 :host ::ng-deep {
     p-editor {
         width: inherit !important;
+    }
+
+    .editor-container {
+        position: relative !important;
+        width: inherit !important;
+        /* Needed for sticky positioning */
+        max-height: 400px !important;
+        /* Set the height of the container */
+        overflow-y: auto !important;
+        /* Allow scrolling within the editor */
+        border-radius: 4px !important;
+    }
+
+    .editor-container .ql-toolbar {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 10 !important;
     }
 }

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Blog } from '../../../core/models/blog';
+import { Blog, BlogSortOptions } from '../../../core/models/blog';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { forkJoin } from 'rxjs';
 import { BlogService } from '../../../core/services/blog.service';
@@ -9,6 +9,8 @@ import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
 import { environment } from '../../../../environment/environment';
 import { Category } from '../../../core/models/category';
 import { CategoryService } from '../../../core/services/category.service';
+import { Paginator, PaginatorState } from 'primeng/paginator';
+import { BlogPaginationRequestBody, PageEvent } from '../../../core/models/common/pagination.model';
 Quill.register('modules/imageResize', ImageResize);
 Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
 
@@ -20,6 +22,11 @@ Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste);
   styleUrl: './manage-blog.component.scss'
 })
 export class ManageBlogComponent implements OnInit {
+
+  @ViewChild('paginator', { static: true }) paginator!: Paginator;
+  total: number = 0;
+  size: number = 5;
+  offset: number = 0;
 
   records: Blog[] = [];
   selectedRecords: Blog[] = [];
@@ -54,7 +61,6 @@ export class ManageBlogComponent implements OnInit {
 
   modules = {
     imageResize: {},
-    customImage: {},
     imageDropAndPaste: {
       handler: this.pasteImageHandler
     }
@@ -72,17 +78,35 @@ export class ManageBlogComponent implements OnInit {
     this.fetchData()
   }
 
-  fetchData() {
-    this.blogService.getBlogs().subscribe(res => {
-      this.records = res;
+
+  handleSearch() {
+    let payload: BlogPaginationRequestBody = {
+      search: '',
+      offset: this.offset,
+      size: this.size,
+      filterOptions: [],
+      sortOptions: BlogSortOptions.Default
+    }
+    this.blogService.searchBlogs(payload).subscribe(res => {
+      this.records = res.data;
+      this.total = res.total;
     })
+  }
+
+  onPageChange(e: PageEvent | PaginatorState) {
+    const event = e as PageEvent;
+    this.offset = event.page;
+    this.handleSearch();
+  }
+
+  fetchData() {
     this.categoryService.getCategories().subscribe(res => {
       this.categories = res;
     });
+    this.handleSearch();
   }
 
   onCategorySelect(category: Category) {
-    // Add selected category to selectedCategoryIds
     const index = this.selectedCategoryIds.indexOf(category.id!);
     if (index === -1) {
       this.selectedCategoryIds.push(category.id!);

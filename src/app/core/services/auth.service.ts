@@ -21,20 +21,20 @@ export class AuthService {
   }
 
   logOut() {
-    sessionStorage.clear();
+    localStorage.clear();
     window.location.reload();
   }
 
   storeToken(tokenValue: string) {
-    sessionStorage.setItem('_secure_token', tokenValue)
+    localStorage.setItem('_s_e_c_u_r_e__t_o_k_e_n', tokenValue)
   }
 
   getToken() {
-    return sessionStorage.getItem('_secure_token');
+    return localStorage.getItem('_s_e_c_u_r_e__t_o_k_e_n');
   }
 
   isLoggedIn(): boolean {
-    return !!sessionStorage.getItem('_secure_token');
+    return !!localStorage.getItem('_s_e_c_u_r_e__t_o_k_e_n');
   }
 
   decodeToken() {

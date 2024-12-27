@@ -68,7 +68,7 @@
             class="col-12 md:col-6 lg:col-4 xl:col-3 p-2"
         >
             <div
-                class="p-3 border-1 border-round surface-border surface-card dark:surface-dark"
+                class="p-3 surface-card dark:surface-dark"
             >
                 <div class="flex align-items-center justify-content-between gap-2">
                     <p-skeleton class="w-6rem h-2rem"></p-skeleton>
@@ -88,9 +88,8 @@
     </div>
 </ng-template>
 
-<div class="flex justify-content-center w-100 align-items-center my-5">
-    <p-paginator [showCurrentPageReport]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} blogs" #paginator [first]="0" [rows]="8"
+<div class="flex justify-content-center w-full align-items-center my-5">
+    <p-paginator #paginator [first]="0" [rows]="8"
         [totalRecords]="total" (onPageChange)="onPageChange($event)">
     </p-paginator>
 </div>

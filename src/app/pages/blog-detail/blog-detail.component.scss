@@ -1,5 +1,10 @@
 ::ng-deep .blog-content img {
     display: block;
     margin: 4% auto 4% auto !important;
-    width: -webkit-fill-available !important;
+}
+
+@media (max-width: 768px) { /* Áp dụng cho màn hình có chiều rộng <= 768px (mobile) */
+    ::ng-deep .blog-content img {
+        width: -webkit-fill-available !important;
+    }
 }
