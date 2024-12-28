@@ -81,6 +81,15 @@ import { UploadFileComponent } from './features/upload-file/upload-file.componen
 import { DataView } from 'primeng/dataview';
 import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
 import { SkeletonModule } from 'primeng/skeleton';
+import { CountryComponent } from './pages/tools/country/country.component';
+import { RandomUserComponent } from './pages/tools/random-user/random-user.component';
+import { CurrencyExchangeComponent } from './pages/tools/currency-exchange/currency-exchange.component';
+import { AvatarModule } from 'primeng/avatar';
+import { AvatarGroupModule } from 'primeng/avatargroup';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { AccordionModule } from 'primeng/accordion';
+import { WeatherComponent } from './pages/tools/weather/weather.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +111,11 @@ import { SkeletonModule } from 'primeng/skeleton';
     EnterKeyComponent,
     SidebarComponent,
     UploadFileComponent,
-    BlogDetailComponent
+    BlogDetailComponent,
+    CountryComponent,
+    RandomUserComponent,
+    CurrencyExchangeComponent,
+    WeatherComponent
   ],
   imports: [
     HttpClientModule,
@@ -166,6 +179,11 @@ import { SkeletonModule } from 'primeng/skeleton';
     ToggleSwitch,
     DataView,
     SkeletonModule,
+    AvatarModule,
+    AvatarGroupModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    AccordionModule,
     
   ],
   providers: [

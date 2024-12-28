@@ -1,0 +1,172 @@
+<p-card>
+    <div class="flex justify-content-center align-items-center vh-100 text-center">
+        <div>
+            <div class="mb-2 text-primary text-3xl">Tra cứu thông tin quốc gia</div>
+            <div class="mb-4 text-primary text-base text-color-secondary">
+                Công cụ này cho phép bạn tra cứu thông tin chi tiết về các quốc gia trên thế giới dựa trên lựa chọn của
+                bạn.
+                Thông tin bao gồm vị trí địa lý, múi giờ, dân số, ngôn ngữ chính, và các đặc điểm nổi bật khác
+            </div>
+            <div class="p-fluid grid align-items-center">
+                <div class="col-12 md:col-2">
+                    <p-dropdown class="w-full" [options]="fields" [(ngModel)]="field" placeholder="Select Field">
+                    </p-dropdown>
+                </div>
+                <div class="col-12 md:col-10">
+                    <p-inputgroup>
+                        <input (keyup.enter)="fetchCountries()" pInputText [placeholder]="getPlaceholder()"
+                            [(ngModel)]="query" />
+                        <p-inputgroup-addon>
+                            <p-button [disabled]="!query" iconPos="right" variant="text" icon="pi pi-search"
+                            [loading]="loading" (onClick)="fetchCountries()" [disabled]="!field || !query"/>
+                        </p-inputgroup-addon>
+                    </p-inputgroup>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="!loading; else load">
+
+        <ng-container *ngIf="countries.length>0; else notfound">
+            <p-dataview styleClass="mt-3" [emptyMessage]="'Không tìm thấy dữ liệu'" #dv [value]="countries">
+                <ng-template #list let-items>
+                    <div class="grid">
+                        <div class="col-12" *ngFor="let item of items; let first = first">
+                            <p-card>
+                                <div class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-4"
+                                    [ngClass]="{ 'surface-border': !first }">
+                                    <div class="md:w-16rem relative">
+                                        <img class="block xl:block mx-auto border-round w-7" [src]="item.flags.png"
+                                            [alt]="item.name.common" />
+                                    </div>
+                                    <div
+                                        class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                                        <div
+                                            class="flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                                            <div>
+                                                <span class="font-medium text-secondary text-sm">{{ item.region
+                                                    }}</span>
+                                                <div class="text-xl font-medium text-900 mt-2">{{ item.name.common }}
+                                                </div>
+                                            </div>
+                                            <div class="surface-100 p-1 border-round-3xl">
+                                                <div
+                                                    class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2 border-round-3xl shadow-1">
+                                                    <span class="text-900 font-medium text-sm">{{
+                                                        item.population | number
+                                                        }}</span>
+                                                    <i class="pi pi-users"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-column md:align-items-end gap-4">
+                                            <span class="text-xl font-semibold text-900">Thủ đô: {{
+                                                item?.capital[0]
+                                                }}</span>
+                                            <div class="flex flex-row-reverse md:flex-row gap-2">
+                                                <p-button (onClick)="openMap(item.maps.googleMaps)" icon="pi pi-map"
+                                                    [outlined]="true" />
+                                                <p-button icon="pi pi-info-circle"
+                                                    class="flex-auto md:flex-initial white-space-nowrap"
+                                                    label="Xem chi tiết" (onClick)="showDetails(item)" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-card>
+
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataview>
+        </ng-container>
+
+    </ng-container>
+
+
+    <ng-template #notfound>
+        <div class="flex justify-content-center p-5">
+            <img src="assets/empty.png" alt="No blog available" class="w-6 md:w-4 lg:w-3" />
+        </div>
+    </ng-template>
+
+    <ng-template #load>
+        <div class="rounded border border-surface-200 dark:border-surface-700 p-6 bg-surface-0 dark:bg-surface-900">
+            <div class="flex mb-4">
+                <p-skeleton shape="circle" size="4rem" styleClass="mr-2" />
+                <div>
+                    <p-skeleton width="10rem" styleClass="mb-2" />
+                    <p-skeleton width="5rem" styleClass="mb-2" />
+                    <p-skeleton height=".5rem" />
+                </div>
+            </div>
+            <p-skeleton width="100%" height="150px" />
+            <div class="flex justify-content-between mt-4">
+                <p-skeleton width="4rem" height="2rem" />
+                <p-skeleton width="4rem" height="2rem" />
+            </div>
+        </div>
+    </ng-template>
+
+</p-card>
+
+<p-dialog [(visible)]="displayDialog" [modal]="true" [style]="{width: '90vw', maxWidth: '800px'}"
+    [header]="selectedCountry?.name?.common" [draggable]="false" [resizable]="false">
+    <div class="grid" *ngIf="selectedCountry">
+        <div class="col-12 md:col-6">
+            <img [src]="selectedCountry.flags?.png" [alt]="selectedCountry.flags?.alt || 'country flag'"
+                class="w-full border-round" />
+        </div>
+        <div class="col-12 md:col-6">
+            <h3 class="text-xl font-bold mb-3">Thông tin chính thức</h3>
+            <p class="mb-2">Tên chính thức: {{selectedCountry.name?.official || 'N/A'}}</p>
+            <p class="mb-2">Tên địa phương: {{selectedCountry.name?.nativeName?.vie?.official || 'N/A'}}</p>
+            <p class="mb-2">Thủ đô: {{selectedCountry.capital?.length ? selectedCountry.capital[0] : 'N/A'}}</p>
+            <p class="mb-2">Dân số: {{selectedCountry.population | number}} người</p>
+            <p class="mb-2">Diện tích: {{selectedCountry.area | number}} km²</p>
+        </div>
+
+        <div class="col-12">
+            <p-divider></p-divider>
+            <h3 class="text-xl font-bold mb-3">Thông tin chi tiết</h3>
+
+            <p-accordion [multiple]="true">
+                <p-accordionTab header="Vị trí địa lý">
+                    <p class="mb-2">Châu lục: {{selectedCountry.continents?.join(', ') || 'N/A'}}</p>
+                    <p class="mb-2">Khu vực: {{selectedCountry.region || 'N/A'}} - {{selectedCountry.subregion ||
+                        'N/A'}}</p>
+                    <p class="mb-2">Tọa độ: {{selectedCountry.latlng?.length ? selectedCountry.latlng[0] + '°N, ' +
+                        selectedCountry.latlng[1] + '°E' : 'N/A'}}</p>
+                    <p class="mb-2">Múi giờ: {{selectedCountry.timezones?.join(', ') || 'N/A'}}</p>
+                </p-accordionTab>
+
+                <p-accordionTab header="Thông tin hành chính">
+                    <p class="mb-2">Mã quốc gia: {{selectedCountry.cca2 || 'N/A'}} / {{selectedCountry.cca3 || 'N/A'}}
+                    </p>
+                    <p class="mb-2">Tiền tệ: {{getCurrency(selectedCountry.currencies)}}</p>
+                    <p class="mb-2">Ngôn ngữ: {{getLanguages(selectedCountry.languages)}}</p>
+                    <p class="mb-2">Mã vùng điện thoại:
+                        {{selectedCountry.idd?.root}}{{selectedCountry.idd?.suffixes?.[0] || 'N/A'}}</p>
+                </p-accordionTab>
+
+                <p-accordionTab header="Thông tin khác">
+                    <p class="mb-2">Tên miền quốc gia: {{selectedCountry.tld?.join(', ') || 'N/A'}}</p>
+                    <p class="mb-2">Biên giới với: {{selectedCountry.borders?.length ? selectedCountry.borders.join(',
+                        ') : 'Không có biên giới'}}</p>
+                    <p class="mb-2">FIFA: {{selectedCountry.fifa || 'N/A'}}</p>
+                    <p class="mb-2">Chỉ số GINI: {{getGiniInfo(selectedCountry.gini)}}</p>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+
+        <div class="col-12 flex justify-content-end gap-2 mt-4">
+            <p-button icon="pi pi-map" label="Xem bản đồ" [outlined]="true"
+                (onClick)="openMap(selectedCountry.maps?.googleMaps)">
+            </p-button>
+            <p-button icon="pi pi-times" label="Đóng" (onClick)="displayDialog = false">
+            </p-button>
+        </div>
+    </div>
+</p-dialog>
+<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"></p-toast>

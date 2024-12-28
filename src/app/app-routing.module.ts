@@ -13,6 +13,10 @@ import { ProjectComponent } from './pages/project/project.component';
 import { EnterKeyComponent } from './pages/enter-key/enter-key.component';
 import { authGuard, signedInGuard } from './core/guards/auth.guard';
 import { BlogDetailComponent } from './pages/blog-detail/blog-detail.component';
+import { CountryComponent } from './pages/tools/country/country.component';
+import { RandomUserComponent } from './pages/tools/random-user/random-user.component';
+import { CurrencyExchangeComponent } from './pages/tools/currency-exchange/currency-exchange.component';
+import { WeatherComponent } from './pages/tools/weather/weather.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -41,6 +45,10 @@ const routes: Routes = [
             },
         ]
     },
+    { path: 'tools/country', component: CountryComponent },
+    { path: 'tools/random-user', component: RandomUserComponent },
+    { path: 'tools/currency-exchange', component: CurrencyExchangeComponent },
+    { path: 'tools/weather', component: WeatherComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

@@ -22,9 +22,9 @@ export class HeaderComponent implements OnInit {
 
   applyDarkMode = effect(() => {
     const darkMode = this.darkMode();
-    
+
     localStorage.setItem('darkMode', darkMode ? 'true' : 'false');
-    
+
     if (darkMode) {
       this.isDark = true;
       document.documentElement.classList.add('dark-mode');
@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
     });
 
     this.router.events.subscribe(() => {
-      this.initLabelData();   
+      this.initLabelData();
     });
   }
 
@@ -83,6 +83,36 @@ export class HeaderComponent implements OnInit {
           routerLink: `/project/${project.id}`,
           styleClass: currentRoute === `/project/${project.id}` ? activeRouteClass : '',
         })),
+      },
+      {
+        label: 'Tools',
+        icon: 'pi pi-wrench',
+        items: [
+          {
+            label: 'Tra cứu quốc gia',
+            icon: 'pi pi-globe',
+            routerLink: '/tools/country',
+            styleClass: currentRoute === '/tools/country' ? activeRouteClass : '',
+          },
+          {
+            label: 'Thông tin thời tiết',
+            icon: 'pi pi-cloud',
+            routerLink: '/tools/weather',
+            styleClass: currentRoute === '/tools/weather' ? activeRouteClass : '',
+          },
+          {
+            label: 'Lấy dữ liệu giả',
+            icon: 'pi pi-chart-line',
+            routerLink: '/tools/random-user',
+            styleClass: currentRoute === '/tools/random-user' ? activeRouteClass : '',
+          },
+          {
+            label: 'Chuyển đổi tiền tệ',
+            icon: 'pi pi-money-bill',
+            routerLink: '/tools/currency-exchange',
+            styleClass: currentRoute === '/tools/currency-exchange' ? activeRouteClass : '',
+          },
+        ]
       },
     ];
   }
