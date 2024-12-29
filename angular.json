@@ -46,7 +46,9 @@
               },
               "src/favicon.ico",
               "src/web.config",
-              "src/assets"
+              "src/assets",
+              "src/sitemap.xml",
+              "src/googlea05677c0deefc1c6.html"
             ],
             "styles": [
               "src/styles.scss"
@@ -114,7 +116,9 @@
               },
               "src/favicon.ico",
               "src/web.config",
-              "src/assets"
+              "src/assets",
+              "src/sitemap.xml",
+              "src/googlea05677c0deefc1c6.html"
             ],
             "styles": [
               "src/styles.scss"
