@@ -18,6 +18,7 @@ import { RandomUserComponent } from './pages/tools/random-user/random-user.compo
 import { CurrencyExchangeComponent } from './pages/tools/currency-exchange/currency-exchange.component';
 import { WeatherComponent } from './pages/tools/weather/weather.component';
 import { ImageEditorComponent } from './pages/tools/image-editor/image-editor.component';
+import { ImageGalleryComponent } from './pages/tools/image-gallery/image-gallery.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -51,6 +52,7 @@ const routes: Routes = [
     { path: 'tools/currency-exchange', component: CurrencyExchangeComponent },
     { path: 'tools/weather', component: WeatherComponent },
     { path: 'tools/image-editor', component: ImageEditorComponent },
+    { path: 'tools/image-gallery', component: ImageGalleryComponent },
     { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

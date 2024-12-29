@@ -89,6 +89,12 @@ export class HeaderComponent implements OnInit {
         icon: 'pi pi-wrench',
         items: [
           {
+            label: 'Ở đây có ảnh đẹp',
+            icon: 'pi pi-images',
+            routerLink: '/tools/image-gallery',
+            styleClass: currentRoute === '/tools/image-gallery' ? activeRouteClass : '',
+          },
+          {
             label: 'Tra cứu quốc gia',
             icon: 'pi pi-globe',
             routerLink: '/tools/country',
@@ -111,12 +117,6 @@ export class HeaderComponent implements OnInit {
             icon: 'pi pi-chart-line',
             routerLink: '/tools/random-user',
             styleClass: currentRoute === '/tools/random-user' ? activeRouteClass : '',
-          },
-          {
-            label: 'Chuyển đổi tiền tệ (Unavailable)',
-            icon: 'pi pi-money-bill',
-            routerLink: '/tools/currency-exchange',
-            styleClass: currentRoute === '/tools/currency-exchange' ? activeRouteClass : '',
           },
         ]
       },

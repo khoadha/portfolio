@@ -1,0 +1,64 @@
+<p-card>
+    <div class="flex justify-content-center align-items-center vh-100 text-center">
+        <div class="mx-2 md:mx-0">
+            <div class="mb-2 text-primary text-3xl">Ảnh đẹp ở đây nè</div>
+            <div class="mb-2 text-primary">
+                Khu này cho phép bạn tìm kiếm và tải về các hình ảnh chất lượng cao dựa trên từ khóa mà bạn nhập. Kết
+                quả sẽ hiển thị hình
+                ảnh cùng với thông tin nhiếp ảnh gia và liên kết nguồn từ Unsplash.
+            </div>
+            <div class="w-full flex justify-content-center">
+                <div class="col-12 md:col-6">
+                    <p-inputgroup>
+                        <input (keyup.enter)="loadPhotos()" pInputText
+                            placeholder="Tìm kiếm bằng tiếng anh để có độ hiệu quả cao hơn" [(ngModel)]="query" />
+                        <p-inputgroup-addon>
+                            <p-button [disabled]="!query" iconPos="right" variant="text" icon="pi pi-search"
+                                [loading]="loading" (onClick)="loadPhotos()" />
+                        </p-inputgroup-addon>
+                    </p-inputgroup>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-container *ngIf="!loading">
+        <div class="grid grid-nogutter mt-5">
+            <div *ngFor="let photo of photos" class="col-12 md:col-6 lg:col-3 p-2 border-round-lg">
+                <div class="relative overflow-hidden border-round shadow-2 h-full hover-container">
+                    <!-- Image -->
+                    <img [src]="photo.urls.regular" [alt]="photo.alt_description"
+                        class="w-full h-full object-cover border-round-lg" />
+
+                    <!-- Hover Content -->
+                    <!-- Download Button -->
+                    <div class="hover-overlay-top">
+                        <button class="download-button" (click)="trackDownload(photo)">
+                            <i class="pi pi-download"></i>
+                        </button>
+                    </div>
+                    <div class="hover-overlay-bottom">
+                        <!-- Photographer's Name -->
+                        <p class="photographer">
+                            Photo by 
+                            <a [href]="photo.user.links.html + '?utm_source=your_app_name&utm_medium=referral'"
+                                target="_blank" class="no-underline">
+                                {{ photo.user.name }}
+                            </a>
+                            on <a class="no-underline" href="https://unsplash.com/">Unsplash</a>
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <div *ngIf="photos.length > 0" class="flex justify-content-center w-full align-items-center my-5">
+        <p-paginator [rows]="perPage" [totalRecords]="totalPhotos" [first]="(currentPage - 1) * perPage"
+            (onPageChange)="onPageChange($event)">
+        </p-paginator>
+    </div>
+</p-card>
+
+<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"></p-toast>

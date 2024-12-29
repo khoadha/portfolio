@@ -62,6 +62,7 @@ export class BlogComponent implements OnInit {
     const event = e as PageEvent;
     this.offset = event.page;
     this.handleSearch();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   handleOnSearch() {

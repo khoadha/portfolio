@@ -94,6 +94,7 @@ import { ImageEditorComponent } from './pages/tools/image-editor/image-editor.co
 import { AngularPinturaModule } from '@pqina/angular-pintura';
 import { ImageCompareModule } from 'primeng/imagecompare';
 import { StepperModule } from 'primeng/stepper';
+import { ImageGalleryComponent } from './pages/tools/image-gallery/image-gallery.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { StepperModule } from 'primeng/stepper';
     CurrencyExchangeComponent,
     WeatherComponent,
     ImageEditorComponent,
+    ImageGalleryComponent,
     
   ],
   imports: [

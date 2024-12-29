@@ -3,10 +3,7 @@ import { SafeUrl } from '@angular/platform-browser';
 import { getEditorDefaults } from '@pqina/pintura';
 import { MessageService } from 'primeng/api';
 import { environment } from '../../../../environment/environment';
-interface ImageComparisonModel {
-  original: string;
-  edited: string;
-}
+
 @Component({
   selector: 'app-image-editor',
   standalone: false,
@@ -73,11 +70,6 @@ export class ImageEditorComponent {
         this.editedImageUrl = data.url;
         this.showComparison = true;
         this.changeActiveIndex(3);
-        this.messageService.add({
-          severity: 'success',
-        summary: 'Thành công',
-        detail: 'File tải lên thành công'
-        });
       } catch (error) {
         console.error('Error processing image:', error);
         this.messageService.add({
