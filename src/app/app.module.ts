@@ -90,6 +90,10 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { AccordionModule } from 'primeng/accordion';
 import { WeatherComponent } from './pages/tools/weather/weather.component';
+import { ImageEditorComponent } from './pages/tools/image-editor/image-editor.component';
+import { AngularPinturaModule } from '@pqina/angular-pintura';
+import { ImageCompareModule } from 'primeng/imagecompare';
+import { StepperModule } from 'primeng/stepper';
 
 @NgModule({
   declarations: [
@@ -115,7 +119,9 @@ import { WeatherComponent } from './pages/tools/weather/weather.component';
     CountryComponent,
     RandomUserComponent,
     CurrencyExchangeComponent,
-    WeatherComponent
+    WeatherComponent,
+    ImageEditorComponent,
+    
   ],
   imports: [
     HttpClientModule,
@@ -184,6 +190,9 @@ import { WeatherComponent } from './pages/tools/weather/weather.component';
     InputGroupModule,
     InputGroupAddonModule,
     AccordionModule,
+    AngularPinturaModule,
+    ImageCompareModule,
+    StepperModule,
     
   ],
   providers: [

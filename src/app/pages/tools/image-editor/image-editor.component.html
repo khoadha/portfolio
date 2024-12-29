@@ -1,0 +1,93 @@
+<p-card class="p-mb-4 p-fluid p-col-12 p-md-10">
+    <div class="flex flex-column justify-content-center align-items-center text-center">
+        <div class="mb-2 text-primary text-3xl">Công cụ chỉnh sửa hình ảnh (Beta)</div>
+        <div class="mb-4 text-primary text-base text-color-secondary">
+            Công cụ này cho phép bạn chỉnh sửa hình ảnh một cách dễ dàng và nhanh chóng.
+            Bạn có thể tải lên hình ảnh, chỉnh sửa chúng bằng các công cụ mạnh mẽ, thay đổi kích thước, cắt xén, điều chỉnh màu sắc và thêm các hiệu ứng đặc biệt. Sau khi chỉnh sửa xong, bạn có thể tải xuống hình ảnh đã được chỉnh sửa.
+        </div>
+    </div>
+        <p-stepper [value]="activeIndex" [linear]="true" class="w-full">
+            <p-step-list>
+                <p-step [value]="1">Chọn</p-step>
+                <p-step [value]="2">Chỉnh sửa</p-step>
+                <p-step [value]="3">Tải xuống</p-step>
+            </p-step-list>
+
+            <p-step-panels>
+                <p-step-panel [value]="1">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex flex-column h-full">
+                            <div class="col-12 mb-3">
+                                <p-fileUpload mode="basic" [url]="uploadUrl" name="File" chooseIcon="pi pi-image"
+                                    accept="image/*" (onUpload)="onUpload($event)" [auto]="true"
+                                    chooseLabel="Chọn ảnh cần chỉnh sửa">
+                                </p-fileUpload>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+                <p-step-panel [value]="2">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex pb-4 justify-between">
+                            <p-button label="Chọn ảnh khác" severity="secondary" icon="pi pi-arrow-left"
+                                (onClick)="changeActiveIndex(1)" />
+                        </div>
+                        <div class="flex flex-column h-full">
+                            <div class="col-12" *ngIf="currentImageUrl">
+                                <div style="height: 80vh">
+                                    <pintura-editor [src]="currentImageUrl" [options]="options"
+                                        (process)="onEditorProcess($event)">
+                                    </pintura-editor>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+                <p-step-panel [value]="3">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <div class="flex flex-column h-full">
+                            <div class="col-12 mt-4" *ngIf="showComparison">
+                                <ng-container *ngIf="originalImageUrl && editedImageUrl">
+                                    <div class="flex mb-3 justify-content-start">
+                                        <p-button label="Chỉnh sửa lại" icon="pi pi-arrow-left" iconPos="right"
+                                            (onClick)="changeActiveIndex(2)" />
+                                    </div>
+                                    <div class="flex justify-content-center col-12">
+                                        <div class="card flex justify-center">
+                                            <p-image [src]="editedImageUrl" alt="Image" width="400" [preview]="true" />
+                                        </div>
+                                    </div>
+
+                                </ng-container>
+                                <div class="flex flex-column justify-content-center my-3 text-center">
+                                    <button pButton icon="pi pi-download" label="Tải xuống" (click)="downloadImage()"
+                                        class="p-button-primary mb-2 col-12 lg:col-3 flex align-self-center">
+                                    </button>
+                                    <div class="text-md my-2">Vì không có xèng để mua lisence key nên hình ảnh tải xuống
+                                        có
+                                        watermark. Phiền các bạn tải ảnh xuống và xóa thủ công watermark ở đường link
+                                        bên
+                                        dưới
+                                        nhé, cảm
+                                        ơn!</div>
+                                    <div class="flex flex-row justify-content-center">
+                                        <div class="text-md">
+                                            <p-button (onClick)="followExternalLink('https://dewatermark.ai/vi/upload')"
+                                                [link]="true">dewatermark.ai</p-button>
+                                        </div>
+                                        <div class="text-md">
+                                            <p-button
+                                                (onClick)="followExternalLink('https://www.watermarkremover.io/vi/upload')"
+                                                [link]="true">watermarkremover.io</p-button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-step-panel>
+            </p-step-panels>
+        </p-stepper>
+</p-card>
+
+<p-toast [breakpoints]="{ '920px': { width: '100%', right: '0', left: '0' } }"></p-toast>

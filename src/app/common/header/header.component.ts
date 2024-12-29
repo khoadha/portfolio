@@ -101,13 +101,19 @@ export class HeaderComponent implements OnInit {
             styleClass: currentRoute === '/tools/weather' ? activeRouteClass : '',
           },
           {
+            label: 'Chỉnh sửa ảnh (Beta)',
+            icon: 'pi pi-image',
+            routerLink: '/tools/image-editor',
+            styleClass: currentRoute === '/tools/image-editor' ? activeRouteClass : '',
+          },
+          {
             label: 'Lấy dữ liệu giả',
             icon: 'pi pi-chart-line',
             routerLink: '/tools/random-user',
             styleClass: currentRoute === '/tools/random-user' ? activeRouteClass : '',
           },
           {
-            label: 'Chuyển đổi tiền tệ',
+            label: 'Chuyển đổi tiền tệ (Unavailable)',
             icon: 'pi pi-money-bill',
             routerLink: '/tools/currency-exchange',
             styleClass: currentRoute === '/tools/currency-exchange' ? activeRouteClass : '',
