@@ -39,7 +39,7 @@ export class ImageGalleryComponent implements OnInit {
 
   async trackDownload(photo: any) {
     this.messageService.add({
-      severity: 'warning',
+      severity: 'info',
       summary: 'Đang xử lí',
       detail: 'Kiểm tra hình ảnh trước khi tải xuống...'
     });
