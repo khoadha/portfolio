@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PhotoService } from '../../../core/services/external/photo.service';
 import { MessageService } from 'primeng/api';
+import { Paginator } from 'primeng/paginator';
 
 @Component({
   selector: 'app-image-gallery',
@@ -11,9 +12,11 @@ import { MessageService } from 'primeng/api';
 })
 export class ImageGalleryComponent implements OnInit {
 
+  @ViewChild('paginator', { static: true }) paginator!: Paginator;
+
   photos: any[] = [];
   totalPhotos: number = 0;
-  query: string = 'Việt Nam';
+  query: string = 'dog';
   currentPage: number = 1;
   perPage: number = 8;
   loading: boolean = false;
@@ -26,9 +29,8 @@ export class ImageGalleryComponent implements OnInit {
     this.loadPhotos();
   }
 
-  loadPhotos(): void {
-
-    if(this.query==''){
+  onSearch() {
+    if (this.query == '') {
       this.messageService.add({
         severity: 'warn',
         summary: 'Thiếu thông tin',
@@ -36,6 +38,17 @@ export class ImageGalleryComponent implements OnInit {
       });
       return;
     }
+    this.resetPagination()
+    this.loadPhotos()
+  }
+
+  resetPagination() {
+    this.currentPage = 1;
+    this.paginator.changePage(this.currentPage-1);
+  }
+
+
+  loadPhotos(): void {
     this.loading = true;
     this.photoService.searchPhotos(this.query, this.currentPage, this.perPage).subscribe(
       (response: any) => {
