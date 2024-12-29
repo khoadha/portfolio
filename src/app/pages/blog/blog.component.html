@@ -89,7 +89,7 @@
 </ng-template>
 
 <div class="flex justify-content-center w-full align-items-center my-5">
-    <p-paginator #paginator [first]="0" [rows]="8"
+    <p-paginator [showFirstLastIcon]="false" #paginator [first]="0" [rows]="8"
         [totalRecords]="total" (onPageChange)="onPageChange($event)">
     </p-paginator>
 </div>

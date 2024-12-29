@@ -85,3 +85,24 @@
 .pi-download {
   font-size: 1.25rem;
 }
+
+  .paginator-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .paginator-container {
+        flex-direction: column;
+        align-items: flex-start; /* Align paginator on the left for mobile */
+    }
+
+    /* Optionally, reduce the size of paginator controls */
+    .p-paginator {
+        font-size: 12px; /* Adjust font size to make it more compact */
+    }
+}

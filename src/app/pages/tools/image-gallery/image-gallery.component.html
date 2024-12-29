@@ -22,7 +22,6 @@
         </div>
     </div>
 
-    <ng-container *ngIf="!loading">
         <div class="grid grid-nogutter mt-5">
             <div *ngFor="let photo of photos" class="col-12 md:col-6 lg:col-3 p-2 border-round-lg">
                 <div class="relative overflow-hidden border-round shadow-2 h-full hover-container">
@@ -52,10 +51,10 @@
                 </div>
             </div>
         </div>
-    </ng-container>
+    
 
-    <div *ngIf="photos.length > 0" class="flex justify-content-center w-full align-items-center my-5">
-        <p-paginator [rows]="perPage" [totalRecords]="totalPhotos" [first]="(currentPage - 1) * perPage"
+    <div *ngIf="photos.length > 0" class="flex justify-content-center w-full align-items-center my-5 paginator-container">
+        <p-paginator [showFirstLastIcon]="false" [rows]="perPage" [totalRecords]="totalPhotos" [first]="(currentPage - 1) * perPage"
             (onPageChange)="onPageChange($event)">
         </p-paginator>
     </div>
