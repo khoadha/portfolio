@@ -27,6 +27,15 @@ export class ImageGalleryComponent implements OnInit {
   }
 
   loadPhotos(): void {
+
+    if(this.query==''){
+      this.messageService.add({
+        severity: 'warn',
+        summary: 'Thiếu thông tin',
+        detail: 'Hãy nhập thông tin trước khi tìm kiếm!'
+      });
+      return;
+    }
     this.loading = true;
     this.photoService.searchPhotos(this.query, this.currentPage, this.perPage).subscribe(
       (response: any) => {
