@@ -20,7 +20,7 @@ export class BlogDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const blogId = +params['id'];
+      const blogId = params['id'];
       this.blogService.getById(blogId).subscribe(res => {
         this.blog = res;
       });

@@ -17,7 +17,7 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const projectId = +params['id'];
+      const projectId = params['id'];
       this.projectService.getProjectById(projectId).subscribe(res => {
         this.project = res;
         this.project.skillsArray = res.skills!.split(',');
